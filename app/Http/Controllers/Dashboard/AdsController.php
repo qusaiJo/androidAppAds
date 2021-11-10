@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Ads;
+use App\Models\Day;
 use App\Models\Time;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdsRequest;
@@ -15,9 +16,9 @@ class AdsController extends Controller
     use UploadImageTraite;
 
     #VALDATION FOR THE AD FIRST TYPE 
-    private $adType1Valdation  = ['image' => 'required|dimensions:max_width=120,max_height=600'];
+    private $adType1Valdation   = ['image' => 'required|dimensions:max_width=120,max_height=600'];
     #VALDATION FOR THE AD SECOND TYPE 
-    private $adType2Valdation = ['image' => 'required|dimensions:max_width=468,max_height=60'];
+    private $adType2Valdation   = ['image' => 'required|dimensions:max_width=468,max_height=60'];
     #ERROR VALDATION MESSAGES
     private $errorMessagesType1 = ['image.dimensions' => 'The dimensions for the vertical ad should be 120x600'];
     #ERROR VALDATION MESSAGES
@@ -31,27 +32,31 @@ class AdsController extends Controller
 
     public function create()
     {
-        return view('dashboard.ads.create');
+        $days = Day::get();
+        return view('dashboard.ads.create',compact('days'));
     }
 
     public function edit($id)
     {
         $ad = Ads::find($id);
-        return view('dashboard.ads.edit',compact('ad'));
+        $days = Day::get();
+        $adDays = $ad->days->pluck('id')->toArray();
+        
+        return view('dashboard.ads.edit',compact('ad','days','adDays'));
     }
 
     public function store(AdsRequest $request)
     {
         if($request->type == '1')
         {
-           $validated = $request->validate($this->adType1Valdation,$this->errorMessagesType1);
+          $validated = $request->validate($this->adType1Valdation,$this->errorMessagesType1);
         }
         else
         {
-           $validated = $request->validate($this->adType2Valdation,$this->errorMessagesType2);
+          $validated = $request->validate($this->adType2Valdation,$this->errorMessagesType2);
         }
         $ad = new Ads;
-        $ad->image = $this->uplaodFile('ads',$request->file('image'));
+        $ad->image = $this->uploadFile('ads',$request->file('image'));
         $ad->duration = $request->duration;
         $ad->type = $request->type;
         $ad->save();
@@ -63,6 +68,14 @@ class AdsController extends Controller
             $timeModel->ad()->associate($ad);
             $timeModel->save();
         }
+
+        foreach ( $request->day as $day )
+        {
+            $day = Day::find($day);
+            $day->ads()->attach($ad);
+            $day->save();
+        }
+
         Alert::toast('New ad was created', 'success');  
         return redirect()->route('dashboard.ads.index');
     }
@@ -80,7 +93,7 @@ class AdsController extends Controller
         $ad = Ads::find($id);
         if($request->image)
         {
-            $ad->image = $this->uplaodFile('ads',$request->file('image'));
+            $ad->image = $this->uploadFile('ads',$request->file('image'));
 
         }
         $ad->duration = $request->duration;

@@ -20,4 +20,9 @@ class Ads extends Model
     {
         return $this->hasMany(Time::class,'ad_id')->select(['time']);
     }
+
+    public function days()
+    {
+        return $this->belongsToMany(Day::class);
+    }
 }

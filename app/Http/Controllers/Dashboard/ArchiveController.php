@@ -19,12 +19,19 @@ class ArchiveController extends Controller
     {
          $ad = Ads::withTrashed()->findOrFail($id);
           #REMOVE THE RELATIONS
-          foreach($ad->time as $item )
+          foreach($ad->time as $time )
           {
-              $item->ad()->dissociate();
-              $item->save();
+              $time->ad()->dissociate();
+              $time->save();
+          }
+         #REMOVE THE RELATIONS
+          foreach($ad->days as $day )
+          {
+              $day->ads()->detach($ad);
+              $day->save();
           } 
-          $ad->forceDelete();
+
+        $ad->forceDelete();
         Alert::toast('Ad was deleted', 'success');  
         return response()->json([
             'msg'=>'deleted',

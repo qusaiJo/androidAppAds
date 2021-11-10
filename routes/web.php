@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\AdsController;
 use App\Http\Controllers\Dashboard\ArchiveController;
+use App\Http\Controllers\Dashboard\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,10 +40,16 @@ Route::namespace('Dashboard')->middleware('adminAuth')->prefix('dashboard')->gro
         Route::get('/delete/{id}',[AdsController::class,'delete'])->name('dashboard.ads.delete');
     });
 
-    /** Archive Controller */
+    /** Archive Routes */
     Route::prefix('Archive')->group(function(){
         Route::get('/',[ArchiveController::class,'index'])->name('dashboard.archive.index');
         Route::get('restore/{id}',[ArchiveController::class,'restore'])->name('dashboard.archive.restore');
         Route::get('delete/{id}',[ArchiveController::class,'delete'])->name('dashboard.archive.delete');
+    });
+
+    /** Setting Routes*/
+    Route::prefix('Setting')->group(function(){
+        Route::get('/',[SettingController::class,'edit'])->name('dashboard.setting.edit');
+        Route::post('/edit',[SettingController::class,'update'])->name('dashboard.setting.update');
     });
 });

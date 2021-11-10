@@ -27,18 +27,28 @@
                     <input type="number" value='{{ old('duration') }}' name="duration" class="form-control" id="inputPassword3" placeholder="Duration(in seconds)">
                   </div>
                 </div>
+                <div class="form-group row">
+                  <label for="inputPassword3"  class="col-sm-2 col-form-label">Days</label>
+                  <div class="col-sm-10">
+                   <select name="day[]" id="" class="form-control" multiple>
+                     @foreach ($days as $day)
+                         <option value="{{ $day->id }}">{{ $day->name }}</option>
+                     @endforeach
+                   </select>
+                  </div>
+                </div>
                 <fieldset class="form-group">
                   <div class="row">
                     <legend class="col-form-label col-sm-2 pt-0">Ad type</legend>
                     <div class="col-sm-10">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="type" id="gridRadios1" value="1" checked>
+                        <input class="form-check-input" type="radio" name="type" id="gridRadios1" value="1"  {{ (old('type') == 1)? 'checked':''}}>
                         <label class="form-check-label" for="gridRadios1">
                          Vertical
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="type" id="gridRadios2" value="2">
+                        <input class="form-check-input" type="radio" name="type" id="gridRadios2" value="2"  {{ (old('type') == 2)? 'checked':''}}>
                         <label class="form-check-label" for="gridRadios2">
                          Horizontal
                         </label>

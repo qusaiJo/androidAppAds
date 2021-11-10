@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Storage;
 
 trait UploadImageTraite {
-    public function uplaodFile($folderName,$file)
+    public function uploadFile($folderName,$file)
     {   
         #CHECK IF THE GIVEN FOLDER IT DOSE EXIST IF NOT CREATE ONE.
         if(!Storage::disk('easy_file_uploader')->exists($folderName)) Storage::disk('easy_file_uploader')->makeDirectory($folderName);
