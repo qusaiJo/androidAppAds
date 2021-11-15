@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5fba03549aea24794bb33dff8e64a6b8",
+    "content-hash": "501aed68b9ac9406ca813c438fc0c401",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2314,6 +2314,46 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.10.9"
             },
             "time": "2021-10-10T13:37:39+00:00"
+        },
+        {
+            "name": "qusai/easy-upload-files",
+            "version": "0.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Qusaix/laravel_easy_file_uploader.git",
+                "reference": "97fa018a14572f9a0e7c5c233bccdbe9e890ba0c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Qusaix/laravel_easy_file_uploader/zipball/97fa018a14572f9a0e7c5c233bccdbe9e890ba0c",
+                "reference": "97fa018a14572f9a0e7c5c233bccdbe9e890ba0c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Qusai\\Upload\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Qusaix",
+                    "email": "qusaiznemat6@gmail.com"
+                }
+            ],
+            "description": "to make uploading files very easy",
+            "support": {
+                "issues": "https://github.com/Qusaix/laravel_easy_file_uploader/issues",
+                "source": "https://github.com/Qusaix/laravel_easy_file_uploader/tree/0.0.9"
+            },
+            "time": "2021-03-04T14:45:01+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

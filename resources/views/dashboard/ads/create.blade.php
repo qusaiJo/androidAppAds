@@ -15,6 +15,11 @@
           @endif    
             <form action="{{route('dashboard.ads.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <label id="imageLabel" for="">Ad Example: </label>
+                <div class="d-flex justify-content-center mb-4">
+                  <img id="placeholderAd" src="https://www.5banners.com/store/img/cms/00102.gif" />
+                </div>
+                {{-- <img src="https://www.naylor.com/wp-content/uploads/2019/03/Online-Ad-2018-SuperLeaderboard-970x90px-Blue.jpg" /> --}}
                 <div class="form-group row">
                   <label for="inputEmail3" class="col-sm-2 col-form-label">Image</label>
                   <div class="col-sm-10">
@@ -42,13 +47,13 @@
                     <legend class="col-form-label col-sm-2 pt-0">Ad type</legend>
                     <div class="col-sm-10">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="type" id="gridRadios1" value="1"  {{ (old('type') == 1)? 'checked':''}}>
+                        <input checked onclick="addPlaceholderImage(1)" class="form-check-input" type="radio" name="type" id="gridRadios1" value="1"  {{ (old('type') == 1)? 'checked':''}}>
                         <label class="form-check-label" for="gridRadios1">
                          Vertical
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="type" id="gridRadios2" value="2"  {{ (old('type') == 2)? 'checked':''}}>
+                        <input onclick="addPlaceholderImage(2)" class="form-check-input" type="radio" name="type" id="gridRadios2" value="2"  {{ (old('type') == 2)? 'checked':''}}>
                         <label class="form-check-label" for="gridRadios2">
                          Horizontal
                         </label>
@@ -94,10 +99,64 @@
 </div>
 <script>
    $(document).ready(function(){
-  
-  $("#addTime").click(function(){
-    $("ol").prepend('<li class="mt-3"><input class="form-check-input" type="time"  name="time[]"></li>');
+
+    $('#gridRadios1').click(function(){
+        addPlaceholderImage(1);
+    });
+
+    // Adding new time front-end
+    $("#addTime").click(function(){
+      $("ol").prepend('<li class="mt-3"><input class="form-check-input addTime" type="time"  name="time[]"></li>');
+    });
   });
-});
+
+  // Add Placeholder image
+  function addPlaceholderImage(type)
+    {
+      var img = document.createElement("img"); 
+      var reader = new FileReader();
+    
+      img.id = 'placeholderAd';
+
+      if(type == 1){
+        img.src = 'https://www.5banners.com/store/img/cms/00102.gif'
+        return $("#placeholderAd").replaceWith(img);
+      }
+      img.src = 'https://www.naylor.com/wp-content/uploads/2019/03/Online-Ad-2018-SuperLeaderboard-970x90px-Blue.jpg';
+      return $("#placeholderAd").replaceWith(img);
+    }
+
+    // Change Image Input when user chose from it's computer
+  $("input").change(function(e) {
+
+        for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+
+            var file = e.originalEvent.srcElement.files[i];
+
+            var img = document.createElement("img");
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                img.src = reader.result;
+                img.width = 300;
+                img.height = 300;
+                img.id = 'placeholderAd';
+            }
+            reader.readAsDataURL(file);
+            $("#placeholderAd").replaceWith(img);
+          }
+    });
+
+    // Remove the spicific time element
+      $('.addTime').click(function (event) {
+        alert($(this).index());
+      });
+
+      // var elements = document.getElementsByClassName(className);
+      // while(elements.length > 0){
+      //     elements[0].parentNode.removeChild(elements[0]);
+      // }
+    
+
+  
     </script>
 @endsection

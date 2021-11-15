@@ -16,13 +16,15 @@ class Ads extends Model
         'image',
     ];
 
+    
+
     public function time()
     {
-        return $this->hasMany(Time::class,'ad_id')->select(['time']);
+        return $this->hasMany(Time::class,'ad_id')->select(['time','ad_id']);
     }
 
     public function days()
     {
-        return $this->belongsToMany(Day::class);
+        return $this->belongsToMany(Day::class)->select(['name']);
     }
 }

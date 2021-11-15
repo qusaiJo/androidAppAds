@@ -8,12 +8,12 @@ use App\Models\Time;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdsRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Traits\UploadImageTraite;
 use RealRashid\SweetAlert\Facades\Alert;
+use Qusai\Upload\UploadFiles;
 
 class AdsController extends Controller
 {
-    use UploadImageTraite;
+    use UploadFiles;
 
     #VALDATION FOR THE AD FIRST TYPE 
     private $adType1Valdation   = ['image' => 'required|dimensions:max_width=120,max_height=600'];
@@ -56,7 +56,7 @@ class AdsController extends Controller
           $validated = $request->validate($this->adType2Valdation,$this->errorMessagesType2);
         }
         $ad = new Ads;
-        $ad->image = $this->uploadFile('ads',$request->file('image'));
+        $ad->image = $this->uplaodFile('ads',$request->file('image'));
         $ad->duration = $request->duration;
         $ad->type = $request->type;
         $ad->save();
@@ -93,7 +93,7 @@ class AdsController extends Controller
         $ad = Ads::find($id);
         if($request->image)
         {
-            $ad->image = $this->uploadFile('ads',$request->file('image'));
+            $ad->image = $this->uplaodFile('ads',$request->file('image'));
 
         }
         $ad->duration = $request->duration;

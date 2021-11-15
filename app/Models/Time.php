@@ -12,6 +12,6 @@ class Time extends Model
 
     public function ad()
     {
-        return $this->belongsTo(Ads::class,'ad_id');
+        return $this->belongsTo(Ads::class);
     }
 }
